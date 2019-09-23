@@ -1,6 +1,7 @@
 #ifndef BINTREE_H
 #define BINTREE_H
 #include <iostream>
+#include <ostream>
 
 template <typename T>
 struct Node {
@@ -45,13 +46,13 @@ void binTreeSearch(Node<T> * &pt, int x, int f){
 }
 
 template <typename T>
-void binTreeInsertion(Node<T> *&pt, int x, int f) {
+void binTreeInsertion(Node<T>* pt, int x, int f) {
 
     binTreeSearch(pt, x, f);
     if(f == 1)
         std::cout << "The key " << x << " already exists!\n";
     else{
-        Node<T> *pt1 = new Node<T>;
+        Node<T>* pt1 = new Node<T>;
         pt1->key = x;
         pt1->left = nullptr;
         pt1->right = nullptr;
@@ -61,7 +62,7 @@ void binTreeInsertion(Node<T> *&pt, int x, int f) {
             pt = pt1;
         }
         else{
-            if(f == 2)
+            if( f == 2 )
                 pt->left = pt1;
             else
                 pt->right = pt1;
@@ -70,8 +71,58 @@ void binTreeInsertion(Node<T> *&pt, int x, int f) {
     }
 }
 
-void binTreeRemoval() {
+template<typename T>
+void binTreeRemoval(Node<T>* pt,Node<T>* parent, T x) {
+	if(pt == nullptr) return pt;
 
+	if( pt->key == x ){
+		if( pt->right == pt->left && pt->left == nullptr){
+			delete pt;
+			return;
+		}
+		if( pt->right == nullptr || pt->left == nullptr){
+			if( pt->right != nullptr ){
+				parent->left = pt->left;
+				delete pt;
+				return;
+			}
+			else {
+				parent->right = pt->right;
+				delete pt;
+				return;
+			}
+		}
+	}
+	else {
+		parent = pt;
+
+		if( pt->key > x)
+			pt = pt->left;
+
+		else
+			pt = pt->right;
+
+		binTreeRemoval(pt, parent, x);
+	}
 }
 
+template<typename T>
+std::ostream& operator<<(Node<T>* node, std::ostream& os){
+	if (node->left != nullptr && node->right != nullptr){
+		os << node->left;
+		os << node->key;
+		os << node ->right;
+	}
+	else	
+		return os;
+}
+
+
+template<typename T>
+void freeTree(Node<T>* tree){
+	if (tree == nullptr) return;
+	freeTree(tree->left);
+	freeTree(tree->right);
+	delete tree;
+}
 #endif
