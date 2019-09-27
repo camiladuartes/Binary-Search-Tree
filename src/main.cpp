@@ -2,7 +2,6 @@
 #include <fstream>
 #include <sstream>
 
-
 template<typename T>
 void buildTree(Node<T>* tree, std::string path){
 	std::fstream espec;
@@ -26,40 +25,41 @@ void runTest(Node<T>* tree, std::string path){
 		comand >> func;
 
 		switch( func ){
+			T key;
 
-		case "ENESIMO":
-			/// TODO
-			comand >>arg;
-			enesimo(tree, arg);
-			break;
-		case "POSICAO":
-			/// TODO
-			comand >> arg;
-			pos(tree, arg);
-			break;
-		case "MEDIANA":
-			/// TODO
-			break;
-		case "CHEIA":
-			/// TODO
-			break;
-		case "COMPLETA":
-			/// TODO
-			break;
-		case "IMPRIA":
-			/// Pronto pero no mucho
-			std::cout << tree << std::endl;
-			break;
-		case "INSIRA":
-			comand >> arg;
-			binTreeInsertion(tree, arg);
-			break;
-		case "REMOVA":
-			comand >> arg;
-			binTreeDelete(tree, arg);
-			break;
-		default :
-			std::cout << tree << std::endl;
+		    case "ENESIMO":
+			    /// TODO
+			    comand >>arg;
+			    enesimo(tree, arg);
+			    break;
+		    case "POSICAO":
+			    /// TODO
+			    comand >> arg;
+			    pos(tree, arg);
+			    break;
+		    case "MEDIANA":
+			    /// TODO
+			    break;
+		    case "CHEIA":
+			    /// TODO
+			    break;
+		    case "COMPLETA":
+			    /// TODO
+			    break;
+		    case "IMPRIA":
+			    /// Pronto pero no mucho
+			    std::cout << tree << std::endl;
+			    break;
+		    case "INSIRA":
+			    comand >> key;
+			    binTreeInsertion(tree, key);
+			    break;
+		    case "REMOVA":
+			    comand >> key;
+			    binTreeDelete(tree, key);
+			    break;
+		    default :
+			    std::cout << tree << std::endl;
 		}
 	}
 
@@ -90,7 +90,6 @@ int main(){
 
 	//! Essa função lê o arquivo 1 e constroi a árvore adequada
 	// buildTree(root, "path imaginario por enquanto");
-
 	//! Essa função executa os testes presentes no aquivo 2
 	//runTest(root, "path imaginario por enquanto");
     return 0;
