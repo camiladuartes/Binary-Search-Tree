@@ -9,6 +9,7 @@ struct Node {
     T key;
     int height;
     bool isRoot = false;
+	int nodesR = 0, nodesL = 0;
     Node<T> *left;
     Node<T> *right;
     Node<T> *dad;
@@ -51,33 +52,37 @@ void binTreeSearch(Node<T> *&pt, int x, int & f){
 //void updateHeight(Node<T> tree);
 
 template <typename T>
-void binTreeInsertion(Node<T> *& pt, int x, int f) {
-
-	Node<T>* root = pt;
-    binTreeSearch(pt, x, f);
-    if(f == 1)
-        std::cout << "The key " << x << " already exists!\n";
-    else{
-        Node<T>* pt1 = new Node<T>;
-        pt1->key = x;
-        pt1->left = nullptr;
-        pt1->right = nullptr;
-        if(f == 0){
-            pt = new Node<T>;
-            pt->isRoot = true;
-            pt = pt1;
-        }
-        else{
-            if( f == 2 )
-                pt->left = pt1;
-            else
-                pt->right = pt1;
-        }
-        std::cout << "Adding...\nKey '" << x << "' was has been added to the tree.\n";
-		//updateHeight(root)
-    }
+void binTreeInsertion(Node<T> *& pt, int x) {
+	if (pt->key == x){
+		std::cout <<"Key already exists" <<std::endl;
+		return;
+	}
+	if (pt->key < x ){
+		if ( pt->left == nullptr){
+			pt->left = new Node<T>;
+			pt->left->key = x;
+			pt->left->dad = pt;
+			std::cout << "Key added " <<std::endl;
+			return;
+		}
+		pt->nodesL++;
+		binTreeInsertion(pt->left, x);
+	}
+	else {
+		if ( pt->right == nullptr){
+			pt->right = new Node<T>;
+			pt->right->key = x;
+			pt->right->dad = pt;
+			std::cout << "Key added " <<std::endl;
+			return;
+		}
+		pt->nodesR++;
+		binTreeInsertion(pt->right, x);
+	}
+	
 }
 
+template<typename T>
 void binTreeRemoval(Node<T> *&pt, int x, int f){
     binTreeSearch(pt, x, f);
     if(f == 1){
@@ -94,14 +99,14 @@ void binTreeRemoval(Node<T> *&pt, int x, int f){
             delete pt;
         }
         else if(pt->left != nullptr and pt->right != nullptr){ // não é folha e tem dois filhos
-            Node<T> *predecessor = pt->left;
-            while(predecessor->right != nullptr){
-                predecessor = predecessor->right;
+            Node<T> *pred= pt->left;
+            while(pred->right != nullptr){
+                pred= pred->right;
             }
-            predecessor = pt->right;
-            predecessor->dad->right = predecessor->left;
-            predecessor->left = predecessor->dad;
-            predecessor->dad = nullptr;
+			pred->right = pt->right;
+			pred->dad->right = pred->left;
+			pred->left->dad = pred->dad;
+			pred->left = pt->left;
             delete pt;
         }
         std::cout << "Deleting...\nKey '" << x << "' has been deleted.\n";
