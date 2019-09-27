@@ -1,5 +1,6 @@
 #ifndef BINTREE_H
 #define BINTREE_H
+
 #include <iostream>
 #include <ostream>
 
@@ -13,7 +14,7 @@ struct Node {
 };
 
 template <typename T>
-void binTreeSearch(Node<T> * &pt, int x, int f){
+void binTreeSearch(Node<T> *&pt, int x, int & f){
     if(pt != nullptr){
         if(pt->key == x){
             std::cout << "Key '" << x << "' was found!\n";
@@ -45,9 +46,13 @@ void binTreeSearch(Node<T> * &pt, int x, int f){
     }
 }
 
-template <typename T>
-void binTreeInsertion(Node<T>* pt, int x, int f) {
+//template<typename T>
+//void updateHeight(Node<T> tree);
 
+template <typename T>
+void binTreeInsertion(Node<T> *& pt, int x, int f) {
+
+	Node<T>* root = pt;
     binTreeSearch(pt, x, f);
     if(f == 1)
         std::cout << "The key " << x << " already exists!\n";
@@ -68,12 +73,13 @@ void binTreeInsertion(Node<T>* pt, int x, int f) {
                 pt->right = pt1;
         }
         std::cout << "Adding...\nKey '" << x << "' was has been added to the tree.\n";
+		//updateHeight(root)
     }
 }
 
 template<typename T>
-void binTreeRemoval(Node<T>* pt,Node<T>* parent, T x) {
-	if(pt == nullptr) return pt;
+void binTreeDelete(Node<T> *pt, T x,Node<T>* parent = nullptr) {
+	if(pt == nullptr) return;
 
 	if( pt->key == x ){
 		if( pt->right == pt->left && pt->left == nullptr){
@@ -92,31 +98,37 @@ void binTreeRemoval(Node<T>* pt,Node<T>* parent, T x) {
 				return;
 			}
 		}
+		else{
+			Node<T>* it = pt->right;
+			while(it->right != nullptr)
+				it = it->right;
+			pt->key = it->key;
+		}
 	}
 	else {
 		parent = pt;
-
-		if( pt->key > x)
+		if( pt->key > x ){
+			std::cout << pt->key <<" > " << x << std::endl;
+			std::cout << pt->left->key << std::endl;
 			pt = pt->left;
-
-		else
+		}
+		else{
+			std::cout << pt->key <<" < " << x << std::endl;
 			pt = pt->right;
+		}
 
-		binTreeRemoval(pt, parent, x);
+		binTreeDelete(pt, x, parent);
 	}
 }
 
 template<typename T>
-std::ostream& operator<<(Node<T>* node, std::ostream& os){
-	if (node->left != nullptr && node->right != nullptr){
-		os << node->left;
-		os << node->key;
-		os << node ->right;
-	}
-	else	
-		return os;
+std::ostream& operator<<(std::ostream& os,Node<T>* node ){
+	if (node == nullptr) return os;
+	os << node->left << " ";
+	os << node->key << " ";
+	os << node->right;
+	return os;
 }
-
 
 template<typename T>
 void freeTree(Node<T>* tree){
@@ -125,4 +137,17 @@ void freeTree(Node<T>* tree){
 	freeTree(tree->right);
 	delete tree;
 }
+
+template<typename T>
+Node<T>* enesimo(Node<T> *tree, int n, int it = 1){
+	if (tree == nullptr) return nullptr;
+	if (it>n) return nullptr;
+	enesimo(tree->left, n, it);
+	it++;
+	if (n==it) return tree;
+	enesimo(tree->right,n, it);
+}
+
+
+
 #endif

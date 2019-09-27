@@ -1,5 +1,5 @@
 IDIR =./include
-SRC = ./src/
+SRC =./src/
 CC=g++
 
 all:
