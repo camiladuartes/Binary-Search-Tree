@@ -16,35 +16,22 @@ struct Node {
 };
 
 template <typename T>
-void binTreeSearch(Node<T> *&pt, int x, int & f){
+Node<T>*& binTreeSearch(Node<T> *&pt, T x){
     if(pt != nullptr){
         if(pt->key == x){
             std::cout << "Key '" << x << "' was found!\n";
-            f = 1; // chave encontrada em pt
+            return pt;
+        }
+        else if(pt->key > x){
+            binTreeSearch(pt->left, x);
         }
         else{
-            if(pt->key > x){
-                if(pt->left == nullptr){
-                    std::cout << "Key '" << x << "' was not found!\n";
-                    f = 2; // chave não encontrada e pt aponta pro nó à esquerda
-                }
-                else
-                    pt = pt->left;
-            }
-            else{
-                if(pt->right == nullptr){
-                    std::cout << "Key '" << x << "' was not found!\n";
-                    f = 3; // chave não encontrada e pt aponta pro nó à direita
-                }
-                else
-                    pt = pt->right;
-            }
-            if(f < 1)
-                binTreeSearch(pt, x, f);
+            binTreeSearch(pt->right, x);
         }
     }
     else{
-        std::cout << "Key '" << x << "' was not found! Null pointer sent.\n";
+        std::cout << "Key '" << x << "' was not found!\n";
+        return pt;
     }
 }
 
@@ -52,20 +39,19 @@ void binTreeSearch(Node<T> *&pt, int x, int & f){
 //void updateHeight(Node<T> tree);
 
 template <typename T>
-void binTreeInsertion(Node<T> *& pt, int x) {
+void binTreeInsertion(Node<T> *& pt, T x) {
 	if (pt->key == x){
-		std::cout <<"Key already exists" <<std::endl;
+		std::cout <<"Key '" << x << "' already exists!" << std::endl;
 		return;
 	}
-	if (pt->key < x ){
+	if (pt->key > x ){
 		if ( pt->left == nullptr){
 			pt->left = new Node<T>;
 			pt->left->key = x;
 			pt->left->dad = pt;
-			std::cout << "Key added " <<std::endl;
-			return;
-		}
-		pt->nodesL++;
+            return;
+        }
+        pt->nodesL++;
 		binTreeInsertion(pt->left, x);
 	}
 	else {
@@ -73,7 +59,7 @@ void binTreeInsertion(Node<T> *& pt, int x) {
 			pt->right = new Node<T>;
 			pt->right->key = x;
 			pt->right->dad = pt;
-			std::cout << "Key added " <<std::endl;
+			std::cout << "Adding... Key '" << x << "' has been added!" << std::endl;
 			return;
 		}
 		pt->nodesR++;
@@ -83,31 +69,53 @@ void binTreeInsertion(Node<T> *& pt, int x) {
 }
 
 template<typename T>
-void binTreeRemoval(Node<T> *&pt, int x, int f){
-    binTreeSearch(pt, x, f);
-    if(f == 1){
-        if(pt->left == nullptr and pt->right == nullptr){ // é folha
-            pt->dad = nullptr;
-            delete pt;
+void binTreeRemoval(Node<T> *&pt, T x){
+    auto pt_s = binTreeSearch(pt, x);
+    if(pt_s->key == x){
+        if(pt_s->left == nullptr and pt_s->right == nullptr){ // é folha
+            if (pt_s->dad->left->key == x){
+                pt_s->dad->left = nullptr;
+            }
+            else{
+                pt_s->dad->right = nullptr;
+            }
+            delete pt_s;
         }
-        else if(pt->left != nullptr and pt-> right == nullptr){ // tem uma subárvore vazia (1 filho)
-            pt->dad->left = pt->left;
-            delete pt;
+        else if(pt_s->left != nullptr and pt_s-> right == nullptr){ // tem uma subárvore vazia (1 filho)
+            if(pt_s->dad->left->key == x){
+                pt_s->dad->left = pt_s->left;
+            }
+            else{
+                pt_s->dad->right = pt_s->left;
+            }
+            delete pt_s;
         }
-        else if(pt->left == nullptr and pt-> right != nullptr){ // tem uma subárvore vazia (1 filho)
-            pt->dad->right = pt->right;
-            delete pt;
+        else if(pt_s->left == nullptr and pt_s-> right != nullptr){ // tem uma subárvore vazia (1 filho)
+            if(pt_s->dad->left->key == x){
+                pt_s->dad->left = pt_s->right;
+            }
+            else{
+                pt_s->dad->right = pt_s->right;
+            }
+            delete pt_s;
         }
-        else if(pt->left != nullptr and pt->right != nullptr){ // não é folha e tem dois filhos
-            Node<T> *pred= pt->left;
+        else if(pt_s->left != nullptr and pt_s->right != nullptr){ // não é folha e tem dois filhos
+            Node<T> *pred= pt_s->left;
             while(pred->right != nullptr){
                 pred= pred->right;
             }
-			pred->right = pt->right;
-			pred->dad->right = pred->left;
-			pred->left->dad = pred->dad;
-			pred->left = pt->left;
-            delete pt;
+			pred->right = pt_s->right;
+			T aux = pred->key;
+            pred->key = pt->key;
+            pt->key = aux;
+            if(pred->left == nullptr ){ // é folha
+                pred->dad->right = nullptr;
+                delete pred;
+            }  
+            else if(pred->left != nullptr){ // tem uma subárvore vazia (1 filho)
+                pred->dad->right = pred->left;
+                delete pred;
+            }
         }
         std::cout << "Deleting...\nKey '" << x << "' has been deleted.\n";
     }
