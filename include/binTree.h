@@ -9,6 +9,7 @@ struct Node {
     bool isRoot = false;
     Node<T> *left;
     Node<T> *right;
+    Node<T> *dad;
 };
 
 template <typename T>
@@ -70,8 +71,34 @@ void binTreeInsertion(Node<T> *&pt, int x, int f) {
     }
 }
 
-void binTreeRemoval() {
-
+void binTreeRemoval(Node<T> *&pt, int x, int f){
+    binTreeSearch(pt, x, f);
+    if(f == 1){
+        if(pt->left == nullptr and pt->right == nullptr){ // é folha
+            pt->dad = nullptr;
+            delete pt;
+        }
+        else if(pt->left != nullptr and pt-> right == nullptr){ // tem uma subárvore vazia (1 filho)
+            pt->dad->left = pt->left;
+            delete pt;
+        }
+        else if(pt->left == nullptr and pt-> right != nullptr){ // tem uma subárvore vazia (1 filho)
+            pt->dad->right = pt->right;
+            delete pt;
+        }
+        else if(pt->left != nullptr and pt->right != nullptr){ // não é folha e tem dois filhos
+            Node<T> *predecessor = pt->left;
+            while(predecessor->right != nullptr){
+                predecessor = predecessor->right;
+            }
+            predecessor = pt->right;
+            predecessor->dad->right = predecessor->left;
+            predecessor->left = predecessor->dad;
+            predecessor->dad = nullptr;
+            delete pt;
+        }
+        std::cout << "Deleting...\nKey '" << x << "' has been deleted.\n";
+    }
 }
 
 #endif
