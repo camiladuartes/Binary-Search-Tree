@@ -11,6 +11,7 @@ struct Node {
     bool isRoot = false;
     Node<T> *left;
     Node<T> *right;
+    Node<T> *dad;
 };
 
 template <typename T>
@@ -77,48 +78,34 @@ void binTreeInsertion(Node<T> *& pt, int x, int f) {
     }
 }
 
-template<typename T>
-void binTreeDelete(Node<T> *pt, T x,Node<T>* parent = nullptr) {
-	if(pt == nullptr) return;
-
-	if( pt->key == x ){
-		if( pt->right == pt->left && pt->left == nullptr){
-			delete pt;
-			return;
-		}
-		if( pt->right == nullptr || pt->left == nullptr){
-			if( pt->right != nullptr ){
-				parent->left = pt->left;
-				delete pt;
-				return;
-			}
-			else {
-				parent->right = pt->right;
-				delete pt;
-				return;
-			}
-		}
-		else{
-			Node<T>* it = pt->right;
-			while(it->right != nullptr)
-				it = it->right;
-			pt->key = it->key;
-		}
-	}
-	else {
-		parent = pt;
-		if( pt->key > x ){
-			std::cout << pt->key <<" > " << x << std::endl;
-			std::cout << pt->left->key << std::endl;
-			pt = pt->left;
-		}
-		else{
-			std::cout << pt->key <<" < " << x << std::endl;
-			pt = pt->right;
-		}
-
-		binTreeDelete(pt, x, parent);
-	}
+void binTreeRemoval(Node<T> *&pt, int x, int f){
+    binTreeSearch(pt, x, f);
+    if(f == 1){
+        if(pt->left == nullptr and pt->right == nullptr){ // é folha
+            pt->dad = nullptr;
+            delete pt;
+        }
+        else if(pt->left != nullptr and pt-> right == nullptr){ // tem uma subárvore vazia (1 filho)
+            pt->dad->left = pt->left;
+            delete pt;
+        }
+        else if(pt->left == nullptr and pt-> right != nullptr){ // tem uma subárvore vazia (1 filho)
+            pt->dad->right = pt->right;
+            delete pt;
+        }
+        else if(pt->left != nullptr and pt->right != nullptr){ // não é folha e tem dois filhos
+            Node<T> *predecessor = pt->left;
+            while(predecessor->right != nullptr){
+                predecessor = predecessor->right;
+            }
+            predecessor = pt->right;
+            predecessor->dad->right = predecessor->left;
+            predecessor->left = predecessor->dad;
+            predecessor->dad = nullptr;
+            delete pt;
+        }
+        std::cout << "Deleting...\nKey '" << x << "' has been deleted.\n";
+    }
 }
 
 template<typename T>
