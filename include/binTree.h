@@ -148,6 +148,36 @@ Node<T>* enesimo(Node<T> *tree, int n, int it = 1){
 	enesimo(tree->right,n, it);
 }
 
+template<typename T>
+bool ehCheia(Node<T>* tree){
+	if (tree == nullptr) return false;
+	if (tree->left == tree->right and tree->right == nullptr)
+		return true;
+	if (tree->left != nullptr and tree->right != nullptr)
+		return ehCheia(tree->left) and ehCheia(tree->right);
+	else
+		return false;
+}
+
+template<typename T>
+bool ehCompleta(Node<T>* tree) {
+	if (tree == nullptr) return false;
+	if (tree->left != nullptr and tree->right != nullptr)
+		return true;
+	if (tree->left != nullptr){
+		if (ehCompleta(tree->left))
+			return true;
+		else
+			return false;
+	}
+	else{
+		if (ehCompleta(tree->right))
+			return true;
+		else
+			return false;
+	}
+}
+
 
 
 #endif

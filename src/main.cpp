@@ -41,13 +41,12 @@ void runTest(Node<T>* tree, std::string path){
 				/// TODO
 				break;
 			case "CHEIA":
-				/// TODO
+				std::cout << ehCheia(tree) <<std::endl;
 				break;
 			case "COMPLETA":
-				/// TODO
+				std::cout << ehCompleta(tree) <<std::endl;
 				break;
 			case "IMPRIA":
-				/// Pronto pero no mucho
 				std::cout << tree << std::endl;
 				break;
 			case "INSIRA":
@@ -58,7 +57,7 @@ void runTest(Node<T>* tree, std::string path){
 				comand >> key;
 				binTreeDelete(tree, key);
 				break;
-				default :
+			default :
 				std::cout << tree << std::endl;
 		}
 	}
@@ -84,6 +83,8 @@ int main(){
 	binTreeSearch(root, 8);
 	binTreeSearch(root, 7);
 	binTreeSearch(root, 1);
+
+	std::cout << "ehCheia :"<< ehCheia(root) <<std::endl;
    
 	binTreeRemoval(root, 19);
 	binTreeRemoval(root, 20);
