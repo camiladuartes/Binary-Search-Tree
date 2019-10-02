@@ -79,10 +79,10 @@ int main(){
 
 	std::cout << "Level visitation: " << toString(root) << std::endl << "\n";
 
-    std::cout << "20 position: " << position(root, 20) << std::endl;
-	std::cout << "8 position: " << position(root, 8) << std::endl;
-	std::cout << "2(element that is not in the tree) position: " << position(root, 2) << std::endl;
-	std::cout << "19 position: " << position(root, 19) << std::endl << "\n";
+    // std::cout << "20 position: " << position(root, 20) << std::endl;
+	// std::cout << "8 position: " << position(root, 8) << std::endl;
+	// std::cout << "2(element that is not in the tree) position: " << position(root, 2) << std::endl;
+	// std::cout << "19 position: " << position(root, 19) << std::endl << "\n";
 	
 	binTreeSearch(root, 20);
 	binTreeSearch(root, 19);

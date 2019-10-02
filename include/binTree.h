@@ -199,25 +199,12 @@ std::string toString(Node<T>* tree) {
 
 template<typename T>
 int position(Node<T>* tree, T element) {
-    std::queue<Node<T>*> myqueue;
-    myqueue.push(tree);
-    int nodePosition = 1;
-    while(!myqueue.empty()){
-        auto aux = myqueue.front();
-        if(aux->key == element)
-            return nodePosition;
-        nodePosition += 1;
-        if(aux->left != nullptr)
-            myqueue.push(aux->left);
-        if(aux->right != nullptr)
-            myqueue.push(aux->right);
-        myqueue.pop();
-    }
+    // TODO
     // if the element is not in the tree
     return 0;  
 }
 
 // TODO:
-// corrigir `nthElement`; fazer `mediana`; atualizar altura; ajeitar nodesL e nodesR.
+// corrigir `nthElement`; fazer `mediana` e `posicao`; atualizar altura; ajeitar nodesL e nodesR.
 
 #endif
