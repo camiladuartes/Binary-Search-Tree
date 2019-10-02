@@ -69,6 +69,7 @@ int main(){
 	int f = 0;
     Node<int> *root = new Node<int>;
 	root->key = 19;
+	root->isRoot = true;
     binTreeInsertion(root, 20);
 	binTreeInsertion(root, 20);
     binTreeInsertion(root, 5);

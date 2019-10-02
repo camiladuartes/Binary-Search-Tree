@@ -8,7 +8,7 @@
 template <typename T>
 struct Node {
     T key;
-    int height;
+    int height = 1;
     bool isRoot = false;
 	int nodesR = 0;
     int nodesL = 0;
@@ -37,8 +37,15 @@ Node<T>*& binTreeSearch(Node<T> *&pt, T x){
     }
 }
 
-//template<typename T>
-//void updateHeight(Node<T> tree);
+template<typename T>
+void updateHeight(Node<T> *node){
+    // enquanto não chegar na raíz
+    while(node->isRoot == false){
+        if(node->height+1 > node->dad->height)
+            node->dad->height = node->height+1;
+        node = node->dad;
+    }
+}
 
 template <typename T>
 void binTreeInsertion(Node<T> *& pt, T x) {
@@ -51,6 +58,9 @@ void binTreeInsertion(Node<T> *& pt, T x) {
 			pt->left = new Node<T>;
 			pt->left->key = x;
 			pt->left->dad = pt;
+            std::cout << "Adding... Key '" << x << "' has been added!" << std::endl;
+            // consertando altura
+            updateHeight(pt->left);
             return;
         }
         pt->nodesL++;
@@ -62,7 +72,9 @@ void binTreeInsertion(Node<T> *& pt, T x) {
 			pt->right->key = x;
 			pt->right->dad = pt;
 			std::cout << "Adding... Key '" << x << "' has been added!" << std::endl;
-			return;
+			// consertando altura
+            updateHeight(pt->right);
+            return;
 		}
 		pt->nodesR++;
 		binTreeInsertion(pt->right, x);
