@@ -30,7 +30,7 @@ void runTest(Node<T>* tree, std::string path){
 			case "ENESIMO":
 				/// TODO
 				comand >>arg;
-				enesimo(tree, arg);
+				nthElement(tree, arg);
 				break;
 			case "POSICAO":
 				/// TODO
@@ -41,10 +41,10 @@ void runTest(Node<T>* tree, std::string path){
 				/// TODO
 				break;
 			case "CHEIA":
-				std::cout << ehCheia(tree) <<std::endl;
+				std::cout << isFull(tree) <<std::endl;
 				break;
 			case "COMPLETA":
-				std::cout << ehCompleta(tree) <<std::endl;
+				std::cout << isComplete(tree) <<std::endl;
 				break;
 			case "IMPRIA":
 				std::cout << tree << std::endl;
@@ -75,7 +75,9 @@ int main(){
     binTreeInsertion(root, 8);
     binTreeInsertion(root, 7);
 
-    std::cout << "Tree: " << root << std::endl;
+    std::cout << "\nTree: " << root << std::endl << "\n";
+
+	std::cout << "Level visitation: " << toString(root) << std::endl << "\n";
 
     binTreeSearch(root, 20);
 	binTreeSearch(root, 19);
@@ -84,14 +86,14 @@ int main(){
 	binTreeSearch(root, 7);
 	binTreeSearch(root, 1);
 
-	std::cout << "ehCheia :"<< ehCheia(root) <<std::endl;
+	std::cout << "\nisFull: "<< isFull(root) << std::endl << "\n";
    
 	binTreeRemoval(root, 19);
 	binTreeRemoval(root, 20);
 	binTreeRemoval(root, 5);
 	binTreeSearch(root, 7);
 	binTreeSearch(root, 19);
-	std::cout << "Tree: " << root << std::endl;
+	std::cout << "\nTree: " << root << std::endl << "\n";
 
 	freeTree(root);
 

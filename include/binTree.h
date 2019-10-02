@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <ostream>
+#include <queue>
 
 template <typename T>
 struct Node {
@@ -139,45 +140,62 @@ void freeTree(Node<T>* tree){
 }
 
 template<typename T>
-Node<T>* enesimo(Node<T> *tree, int n, int it = 1){
+Node<T>* nthElement(Node<T> *tree, int n, int it = 1){
 	if (tree == nullptr) return nullptr;
 	if (it>n) return nullptr;
-	enesimo(tree->left, n, it);
+	nthElement(tree->left, n, it);
 	it++;
 	if (n==it) return tree;
-	enesimo(tree->right,n, it);
+	nthElement(tree->right,n, it);
 }
 
 template<typename T>
-bool ehCheia(Node<T>* tree){
+bool isFull(Node<T>* tree){
 	if (tree == nullptr) return false;
 	if (tree->left == tree->right and tree->right == nullptr)
 		return true;
 	if (tree->left != nullptr and tree->right != nullptr)
-		return ehCheia(tree->left) and ehCheia(tree->right);
+		return isFull(tree->left) and isFull(tree->right);
 	else
 		return false;
 }
 
 template<typename T>
-bool ehCompleta(Node<T>* tree) {
+bool isComplete(Node<T>* tree) {
 	if (tree == nullptr) return false;
 	if (tree->left != nullptr and tree->right != nullptr)
 		return true;
 	if (tree->left != nullptr){
-		if (ehCompleta(tree->left))
+		if (isComplete(tree->left))
 			return true;
 		else
 			return false;
 	}
 	else{
-		if (ehCompleta(tree->right))
+		if (isComplete(tree->right))
 			return true;
 		else
 			return false;
 	}
 }
 
+template<typename T>
+std::string toString(Node<T>* tree) {
+    std::string levelVisitationSequence = "";
+    std::queue<Node<T>*> myqueue;
+    myqueue.push(tree);
+    while(!myqueue.empty()){
+        auto aux = myqueue.front();
+        levelVisitationSequence += std::to_string(aux->key) + " ";
+        if(aux->left != nullptr)
+            myqueue.push(aux->left);
+        if(aux->right != nullptr)
+            myqueue.push(aux->right);
+        myqueue.pop();
+    }
+    return levelVisitationSequence;  
+}
 
+// corrigir `nthElement`; fazer `posição`; atualizar altura.
 
 #endif
