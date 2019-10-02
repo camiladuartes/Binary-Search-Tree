@@ -10,7 +10,8 @@ struct Node {
     T key;
     int height;
     bool isRoot = false;
-	int nodesR = 0, nodesL = 0;
+	int nodesR = 0;
+    int nodesL = 0;
     Node<T> *left;
     Node<T> *right;
     Node<T> *dad;
@@ -196,6 +197,27 @@ std::string toString(Node<T>* tree) {
     return levelVisitationSequence;  
 }
 
-// corrigir `nthElement`; fazer `posição`; atualizar altura.
+template<typename T>
+int position(Node<T>* tree, T element) {
+    std::queue<Node<T>*> myqueue;
+    myqueue.push(tree);
+    int nodePosition = 1;
+    while(!myqueue.empty()){
+        auto aux = myqueue.front();
+        if(aux->key == element)
+            return nodePosition;
+        nodePosition += 1;
+        if(aux->left != nullptr)
+            myqueue.push(aux->left);
+        if(aux->right != nullptr)
+            myqueue.push(aux->right);
+        myqueue.pop();
+    }
+    // if the element is not in the tree
+    return 0;  
+}
+
+// TODO:
+// corrigir `nthElement`; fazer `mediana`; atualizar altura; ajeitar nodesL e nodesR.
 
 #endif
