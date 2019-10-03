@@ -59,11 +59,19 @@ void binTreeInsertion(Node<T> *& pt, T x) {
 			pt->left->key = x;
 			pt->left->dad = pt;
             std::cout << "Adding... Key '" << x << "' has been added!" << std::endl;
-            // consertando altura
+            // atualizando altura
             updateHeight(pt->left);
+            // atualizando nodesL
+            Node<T> *node = pt->left;
+            while(node->isRoot == false){
+                if(node->dad->left == node)
+                    node->dad->nodesL++;
+                else
+                    node->dad->nodesR++;
+                node = node->dad;
+            }
             return;
         }
-        pt->nodesL++;
 		binTreeInsertion(pt->left, x);
 	}
 	else {
@@ -72,11 +80,19 @@ void binTreeInsertion(Node<T> *& pt, T x) {
 			pt->right->key = x;
 			pt->right->dad = pt;
 			std::cout << "Adding... Key '" << x << "' has been added!" << std::endl;
-			// consertando altura
+			// atualizando altura
             updateHeight(pt->right);
+            // atualizando nodesR
+            Node<T> *node = pt->right;
+            while(node->isRoot == false){
+                if(node->dad->right == node)
+                    node->dad->nodesR++;
+                else
+                    node->dad->nodesL++;
+                node = node->dad;
+            }
             return;
 		}
-		pt->nodesR++;
 		binTreeInsertion(pt->right, x);
 	}
 	
@@ -217,6 +233,6 @@ int position(Node<T>* tree, T element) {
 }
 
 // TODO:
-// corrigir `nthElement`; fazer `mediana` e `posicao`; atualizar altura; ajeitar nodesL e nodesR.
+// corrigir `nthElement`; fazer `mediana` e `posicao`
 
 #endif
