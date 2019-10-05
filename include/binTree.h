@@ -169,10 +169,12 @@ void freeTree(Node<T>* tree){
 
 template<typename T>
 Node<T>* nthElement(Node<T> *tree, int n){
+    // se tiver que percorrer n+1 noś à esquerda, já está no enésimo nó
 	if ( tree->nodesL + 1 == n) return tree;
-	if ( tree->nodesL > n) return nthElement(tree->left, n);
-	else return nthElement(tree->right, n - 1 - tree->nodesL);
-	
+    // se tiver mais nós pra esquerda do que n, procura essa posição na subárvore da esquerda
+	if ( tree->nodesL >= n) return nthElement(tree->left, n);
+    // menos nós pra esquerda do que n
+	else return nthElement(tree->right, n - 1 - tree->nodesL);	
 }
 
 template<typename T>
@@ -222,11 +224,34 @@ std::string toString(Node<T>* tree) {
     return levelVisitationSequence;  
 }
 
+// int countPosition = 0, aux, countElement = 0;
+// bool boolCountPosition = false;
+// template<typename T>
+// int position(Node<T>* tree, T element) {
+//     if(tree->left != nullptr){
+//         position(tree->left, element);
+//     }
+//     countPosition++;
+//     if(tree->key == element){
+//         aux = countPosition;
+//         countPosition = 0;
+//         boolCountPosition = true;
+//     }
+//     if(tree->right != nullptr){
+//         position(tree->right, element);
+//     }
+//     if(boolCountPosition)
+//         return aux;
+// }
+
 template<typename T>
-int position(Node<T>* tree, T element) {
-    // TODO
-    // if the element is not in the tree
-    return 0;  
+T median(Node<T>* tree){
+    int numNodes = tree->nodesL + tree->nodesR + 1;
+    if(numNodes % 2 != 0){
+        return nthElement(tree, ((tree->nodesL + tree->nodesR + 1)/2)+1)->key;
+    }
+    else
+        return nthElement(tree, ((tree->nodesL + tree->nodesR + 1)/2))->key;
 }
 
 // TODO:

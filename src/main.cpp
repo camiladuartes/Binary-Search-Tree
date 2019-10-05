@@ -74,29 +74,35 @@ int main(){
     binTreeInsertion(root, 5);
     binTreeInsertion(root, 8);
     binTreeInsertion(root, 7);
-    binTreeInsertion(root, 13);
-    binTreeInsertion(root, 15);
+    // binTreeInsertion(root, 13);
+    // binTreeInsertion(root, 15);
 
 
     std::cout << "\nTree: " << root << std::endl << "\n";
+
+	std::cout << "Median: " << median(root) << std::endl << "\n";
 
 	std::cout << "Level visitation: " << toString(root) << std::endl << "\n";
 
     // std::cout << "20 position: " << position(root, 20) << std::endl;
 	// std::cout << "8 position: " << position(root, 8) << std::endl;
-	// std::cout << "2(element that is not in the tree) position: " << position(root, 2) << std::endl;
 	// std::cout << "19 position: " << position(root, 19) << std::endl << "\n";
 	
-	//binTreeSearch(root, 20);
-	//binTreeSearch(root, 19);
-	//binTreeSearch(root, 5);
-	//binTreeSearch(root, 8);
-	//binTreeSearch(root, 7);
-	//binTreeSearch(root, 1);
+	binTreeSearch(root, 20);
+	binTreeSearch(root, 19);
+	binTreeSearch(root, 5);
+	binTreeSearch(root, 8);
+	binTreeSearch(root, 7);
+	binTreeSearch(root, 1);
+	
 	std::cout << "\nisFull: "<< isFull(root) << std::endl << "\n";
-	int pos = 3;
-	std::cout << "3# elemento " << nthElement(root, 3)->key << std::endl;
-	std::cout << "\nTree: " << root << std::endl << "\n";
+
+	std::cout << "First element: " << nthElement(root, 1)->key << std::endl;
+	std::cout << "Second element: " << nthElement(root, 2)->key << std::endl;
+	std::cout << "Third element: " << nthElement(root, 3)->key << std::endl;
+	std::cout << "Fourth element: " << nthElement(root, 4)->key << std::endl;
+	std::cout << "Fifth element: " << nthElement(root, 5)->key << std::endl << "\n";
+	std::cout << "Tree: " << root << std::endl;
 
 	freeTree(root);
 
