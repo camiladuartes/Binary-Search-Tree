@@ -71,9 +71,9 @@ void runTest(Node<T>* tree, std::string path){
 int main(int argc, char* argv[]){
 
     Node<int> *root = new Node<int>;
-	buildTree(root,argv[1]);
-	std::cout << root << std::endl;
-	runTest(root, argv[2]);
-	freeTree(root);
+    buildTree(root,argv[1]);
+    std::cout << root << std::endl;
+    runTest(root, argv[2]);
+    freeTree(root);
     return 0;
 }
