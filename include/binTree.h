@@ -248,13 +248,10 @@ template<typename T>
 T median(Node<T>* tree){
     int numNodes = tree->nodesL + tree->nodesR + 1;
     if(numNodes % 2 != 0){
-        return nthElement(tree, ((tree->nodesL + tree->nodesR + 1)/2)+1)->key;
+        return nthElement(tree, (numNodes/2)+1)->key;
     }
     else
-        return nthElement(tree, ((tree->nodesL + tree->nodesR + 1)/2))->key;
+        return nthElement(tree, numNodes/2)->key;
 }
-
-// TODO:
-// corrigir `nthElement`; fazer `mediana` e `posicao`
 
 #endif
