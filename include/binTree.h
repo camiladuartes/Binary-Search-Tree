@@ -100,6 +100,7 @@ void binTreeInsertion(Node<T> *& pt, T x) {
 template<typename T>
 void binTreeRemoval(Node<T> *&pt, T x){
     auto pt_s = binTreeSearch(pt, x);
+	if (pt_s == nullptr) return;
     if(pt_s->key == x){
         if(pt_s->left == nullptr and pt_s->right == nullptr){ // é folha
             if (pt_s->dad->left->key == x){
@@ -169,10 +170,16 @@ void freeTree(Node<T>* tree){
 
 template<typename T>
 Node<T>* nthElement(Node<T> *tree, int n){
+	if ( n > tree->nodesL + tree->nodesR + 1) return nullptr;
 	if ( tree->nodesL + 1 == n) return tree;
-	if ( tree->nodesL > n) return nthElement(tree->left, n);
-	else return nthElement(tree->right, n - 1 - tree->nodesL);
+	if ( tree->nodesL >= n) return nthElement(tree->left, n);
+	if ( tree->nodesL < n and tree->right != nullptr) return nthElement(tree->right, n - 1 - tree->nodesL);
 	
+}
+
+template<typename T>
+T median (Node<T>* tree ){
+	return nthElement(tree, ((tree->nodesL + tree->nodesR + 1) /2) + 1)->key;
 }
 
 template<typename T>

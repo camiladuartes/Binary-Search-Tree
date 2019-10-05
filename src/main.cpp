@@ -3,12 +3,17 @@
 #include <sstream>
 
 template<typename T>
-void buildTree(Node<T>* tree, std::string path){
+void buildTree(Node<T>* tree, char* path){
+	printf("oi mesmo em ");
 	std::fstream espec;
-	espec.open(path.c_str());
+	espec.open(path);
+	std::cout << "oi mesmo em 2 ";
 	T val;
+	espec>>val;
+	tree->key = val;
+	tree->isRoot = true;
 	while(espec>>val)
-	binTreeInsertion(tree, val);
+		binTreeInsertion(tree, val);
 }
 
 
@@ -23,86 +28,52 @@ void runTest(Node<T>* tree, std::string path){
 		std::string func;
 		int arg;
 		comand >> func;
+		T key;
 
-		switch( func ){
-			T key;
-
-			case "ENESIMO":
-				/// TODO
-				comand >>arg;
-				nthElement(tree, arg);
-				break;
-			case "POSICAO":
-				/// TODO
-				comand >> arg;
-				position(tree, arg);
-				break;
-			case "MEDIANA":
-				/// TODO
-				break;
-			case "CHEIA":
-				std::cout << isFull(tree) <<std::endl;
-				break;
-			case "COMPLETA":
-				std::cout << isComplete(tree) <<std::endl;
-				break;
-			case "IMPRIA":
-				std::cout << tree << std::endl;
-				break;
-			case "INSIRA":
-				comand >> key;
-				binTreeInsertion(tree, key);
-				break;
-			case "REMOVA":
-				comand >> key;
-				binTreeDelete(tree, key);
-				break;
-			default :
-				std::cout << tree << std::endl;
+		if (func == "ENESIMO"){
+			/// TODO
+			comand >>arg;
+			std::cout << "Elemento " << arg << " " << nthElement(tree, arg)->key << std::endl;
+		}
+		else if ( func == "POSICAO"){
+			/// TODO
+			comand >> arg;
+			position(tree, arg);
+		}
+		else if ( func == "MEDIANA"){
+			std::cout<< "Mediana: " <<median(tree) <<std::endl;
+			/// TODO
+		}
+		else if ( func == "CHEIA"){
+			std::cout << "Eh cheia "<< isFull(tree) <<std::endl;
+		}
+		else if ( func == "COMPLETA"){
+			std::cout << "Eh completa "<< isComplete(tree) <<std::endl;
+		}
+		else if ( func == "IMPRIMA"){
+			std::cout << tree << std::endl;
+		}
+		else if ( func == "INSIRA"){
+			comand >> key;
+			binTreeInsertion(tree, key);
+		}
+		else if ( func == "REMOVA"){
+			comand >> key;
+			binTreeRemoval(tree, key);
+		}
+		else{ 
+			std::cout << tree << std::endl;
 		}
 	}
 
 }
 
-int main(){
+int main(int argc, char* argv[]){
 
-	int f = 0;
     Node<int> *root = new Node<int>;
-	root->key = 19;
-	root->isRoot = true;
-    binTreeInsertion(root, 20);
-    binTreeInsertion(root, 5);
-    binTreeInsertion(root, 8);
-    binTreeInsertion(root, 7);
-    binTreeInsertion(root, 13);
-    binTreeInsertion(root, 15);
-
-
-    std::cout << "\nTree: " << root << std::endl << "\n";
-
-	std::cout << "Level visitation: " << toString(root) << std::endl << "\n";
-
-    // std::cout << "20 position: " << position(root, 20) << std::endl;
-	// std::cout << "8 position: " << position(root, 8) << std::endl;
-	// std::cout << "2(element that is not in the tree) position: " << position(root, 2) << std::endl;
-	// std::cout << "19 position: " << position(root, 19) << std::endl << "\n";
-	
-	//binTreeSearch(root, 20);
-	//binTreeSearch(root, 19);
-	//binTreeSearch(root, 5);
-	//binTreeSearch(root, 8);
-	//binTreeSearch(root, 7);
-	//binTreeSearch(root, 1);
-	std::cout << "\nisFull: "<< isFull(root) << std::endl << "\n";
-	int pos = 3;
-	std::cout << "3# elemento " << nthElement(root, 3)->key << std::endl;
-	std::cout << "\nTree: " << root << std::endl << "\n";
-
+	buildTree(root,argv[1]);
+	std::cout << root << std::endl;
+	runTest(root, argv[2]);
 	freeTree(root);
-
-	//! Essa função lê o arquivo 1 e constroi a árvore adequada
-	// buildTree(root, "path imaginario por enquanto");
-	//! Essa função executa os testes presentes no aquivo 2
-	//runTest(root, "path imaginario por enquanto");
     return 0;
 }
