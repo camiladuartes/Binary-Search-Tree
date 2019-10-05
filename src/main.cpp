@@ -71,10 +71,12 @@ int main(){
 	root->key = 19;
 	root->isRoot = true;
     binTreeInsertion(root, 20);
-	binTreeInsertion(root, 20);
     binTreeInsertion(root, 5);
     binTreeInsertion(root, 8);
     binTreeInsertion(root, 7);
+    binTreeInsertion(root, 13);
+    binTreeInsertion(root, 15);
+
 
     std::cout << "\nTree: " << root << std::endl << "\n";
 
@@ -85,20 +87,15 @@ int main(){
 	// std::cout << "2(element that is not in the tree) position: " << position(root, 2) << std::endl;
 	// std::cout << "19 position: " << position(root, 19) << std::endl << "\n";
 	
-	binTreeSearch(root, 20);
-	binTreeSearch(root, 19);
-	binTreeSearch(root, 5);
-	binTreeSearch(root, 8);
-	binTreeSearch(root, 7);
-	binTreeSearch(root, 1);
-
+	//binTreeSearch(root, 20);
+	//binTreeSearch(root, 19);
+	//binTreeSearch(root, 5);
+	//binTreeSearch(root, 8);
+	//binTreeSearch(root, 7);
+	//binTreeSearch(root, 1);
 	std::cout << "\nisFull: "<< isFull(root) << std::endl << "\n";
-   
-	binTreeRemoval(root, 19);
-	binTreeRemoval(root, 20);
-	binTreeRemoval(root, 5);
-	binTreeSearch(root, 7);
-	binTreeSearch(root, 19);
+	int pos = 3;
+	std::cout << "3# elemento " << nthElement(root, 3)->key << std::endl;
 	std::cout << "\nTree: " << root << std::endl << "\n";
 
 	freeTree(root);

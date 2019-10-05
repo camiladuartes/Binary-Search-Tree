@@ -95,7 +95,6 @@ void binTreeInsertion(Node<T> *& pt, T x) {
 		}
 		binTreeInsertion(pt->right, x);
 	}
-	
 }
 
 template<typename T>
@@ -169,13 +168,11 @@ void freeTree(Node<T>* tree){
 }
 
 template<typename T>
-Node<T>* nthElement(Node<T> *tree, int n, int it = 1){
-	if (tree == nullptr) return nullptr;
-	if (it>n) return nullptr;
-	nthElement(tree->left, n, it);
-	it++;
-	if (n==it) return tree;
-	nthElement(tree->right,n, it);
+Node<T>* nthElement(Node<T> *tree, int n){
+	if ( tree->nodesL + 1 == n) return tree;
+	if ( tree->nodesL > n) return nthElement(tree->left, n);
+	else return nthElement(tree->right, n - 1 - tree->nodesL);
+	
 }
 
 template<typename T>
