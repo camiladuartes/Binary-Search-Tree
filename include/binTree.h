@@ -21,7 +21,6 @@ template <typename T>
 Node<T>*& binTreeSearch(Node<T> *&pt, T x){
     if(pt != nullptr){
         if(pt->key == x){
-            std::cout << "Key '" << x << "' was found!\n";
             return pt;
         }
         else if(pt->key > x){
@@ -32,7 +31,6 @@ Node<T>*& binTreeSearch(Node<T> *&pt, T x){
         }
     }
     else{
-        std::cout << "Key '" << x << "' was not found!\n";
         return pt;
     }
 }
@@ -97,7 +95,7 @@ void binTreeInsertion(Node<T> *& pt, T x) {
 	}
 }
 
-template<typename T>
+template <typename T>
 void binTreeRemoval(Node<T> *&pt, T x){
     auto pt_s = binTreeSearch(pt, x);
 	if (pt_s == nullptr) return;
@@ -153,10 +151,11 @@ void binTreeRemoval(Node<T> *&pt, T x){
 
 template<typename T>
 std::ostream& operator<<(std::ostream& os,Node<T>* node ){
-	if (node == nullptr) return os;
-	os << node->left << " ";
+	if (node->left != nullptr) 
+		os << node->left << " ";
 	os << node->key << " ";
-	os << node->right;
+	if (node->right != nullptr) 
+		os << node->right;
 	return os;
 }
 
@@ -176,6 +175,17 @@ Node<T>* nthElement(Node<T> *tree, int n){
 	if ( tree->nodesL >= n) return nthElement(tree->left, n);
     // menos nós pra esquerda do que n
 	else return nthElement(tree->right, n - 1 - tree->nodesL);	
+}
+
+
+template<typename T>
+int position(Node<T>* tree, T element) {
+	if ( tree == nullptr ) return 0;
+	if ( tree->key == element ) return 1;
+	if ( tree->key < element )
+		return 1 + position(tree->left, element);
+	else
+		return tree->nodesL + position(tree->right, element);
 }
 
 template<typename T>
@@ -217,16 +227,6 @@ std::string toString(Node<T>* tree) {
         myqueue.pop();
     }
     return levelVisitationSequence;  
-}
-
-template<typename T>
-int position(Node<T>* tree, T element) {
-	if ( tree == nullptr ) return 0;
-	if ( tree->key == element ) return 1;
-	if ( tree->key < element )
-		return 1 + position(tree->left, element);
-	else
-		return tree->nodesL + position(tree->right, element);
 }
 
 template<typename T>
