@@ -4,10 +4,8 @@
 
 template<typename T>
 void buildTree(Node<T>* tree, char* path){
-	printf("oi mesmo em ");
 	std::fstream espec;
 	espec.open(path);
-	std::cout << "oi mesmo em 2 ";
 	T val;
 	espec>>val;
 	tree->key = val;
@@ -31,27 +29,21 @@ void runTest(Node<T>* tree, std::string path){
 		T key;
 
 		if (func == "ENESIMO"){
-			/// TODO
 			comand >>arg;
 			std::cout << "Elemento " << arg << " " << nthElement(tree, arg)->key << std::endl;
 		}
 		else if ( func == "POSICAO"){
-			/// TODO
 			comand >> arg;
-			position(tree, arg);
+			std::cout << "Posição de " << arg << " " <<position(tree, arg) << std::endl;
 		}
 		else if ( func == "MEDIANA"){
 			std::cout<< "Mediana: " <<median(tree) <<std::endl;
-			/// TODO
 		}
 		else if ( func == "CHEIA"){
 			std::cout << "Eh cheia "<< isFull(tree) <<std::endl;
 		}
 		else if ( func == "COMPLETA"){
-			std::cout << "Eh completa "<< isComplete(tree) <<std::endl;
-		}
-		else if ( func == "IMPRIMA"){
-			std::cout << tree << std::endl;
+			std::cout << "Eh completa "<< isComplete(tree, tree->nodesL + tree->nodesR + 1) <<std::endl;
 		}
 		else if ( func == "INSIRA"){
 			comand >> key;

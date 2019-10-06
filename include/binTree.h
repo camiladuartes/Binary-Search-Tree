@@ -194,8 +194,6 @@ bool isComplete (Node<T>* root, unsigned int number_nodes, unsigned int index = 
     if (root == nullptr) 
         return (true); 
   
-    // If index assigned to current node is more than 
-    // number of nodes in tree, then tree is not complete 
     if (index >= number_nodes) 
         return (false); 
   
