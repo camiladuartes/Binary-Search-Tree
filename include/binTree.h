@@ -179,11 +179,6 @@ Node<T>* nthElement(Node<T> *tree, int n){
 }
 
 template<typename T>
-T median (Node<T>* tree ){
-	return nthElement(tree, ((tree->nodesL + tree->nodesR + 1) /2) + 1)->key;
-}
-
-template<typename T>
 bool isFull(Node<T>* tree){
 	if (tree == nullptr) return false;
 	if (tree->left == tree->right and tree->right == nullptr)
@@ -195,23 +190,19 @@ bool isFull(Node<T>* tree){
 }
 
 template<typename T>
-bool isComplete(Node<T>* tree) {
-	if (tree == nullptr) return false;
-	if (tree->left != nullptr and tree->right != nullptr)
-		return true;
-	if (tree->left != nullptr){
-		if (isComplete(tree->left))
-			return true;
-		else
-			return false;
-	}
-	else{
-		if (isComplete(tree->right))
-			return true;
-		else
-			return false;
-	}
-}
+bool isComplete (Node<T>* root, unsigned int number_nodes, unsigned int index = 0) { 
+    if (root == nullptr) 
+        return (true); 
+  
+    // If index assigned to current node is more than 
+    // number of nodes in tree, then tree is not complete 
+    if (index >= number_nodes) 
+        return (false); 
+  
+    // Recur for left and right subtrees 
+    return (isComplete(root->left, 2*index + 1, number_nodes) && 
+            isComplete(root->right, 2*index + 2, number_nodes)); 
+} 
 
 template<typename T>
 std::string toString(Node<T>* tree) {
@@ -230,25 +221,15 @@ std::string toString(Node<T>* tree) {
     return levelVisitationSequence;  
 }
 
-// int countPosition = 0, aux, countElement = 0;
-// bool boolCountPosition = false;
-// template<typename T>
-// int position(Node<T>* tree, T element) {
-//     if(tree->left != nullptr){
-//         position(tree->left, element);
-//     }
-//     countPosition++;
-//     if(tree->key == element){
-//         aux = countPosition;
-//         countPosition = 0;
-//         boolCountPosition = true;
-//     }
-//     if(tree->right != nullptr){
-//         position(tree->right, element);
-//     }
-//     if(boolCountPosition)
-//         return aux;
-// }
+template<typename T>
+int position(Node<T>* tree, T element) {
+	if ( tree == nullptr ) return 0;
+	if ( tree->key == element ) return 1;
+	if ( tree->key < element )
+		return 1 + position(tree->left, element);
+	else
+		return tree->nodesL + position(tree->right, element);
+}
 
 template<typename T>
 T median(Node<T>* tree){
