@@ -24,10 +24,10 @@ Node<T>*& binTreeSearch(Node<T> *&pt, T x){
             return pt;
         }
         else if(pt->key > x){
-            binTreeSearch(pt->left, x);
+            return binTreeSearch(pt->left, x);
         }
         else{
-            binTreeSearch(pt->right, x);
+            return binTreeSearch(pt->right, x);
         }
     }
     else{
@@ -132,7 +132,6 @@ void binTreeRemoval(Node<T> *&pt, T x){
             while(pred->right != nullptr){
                 pred= pred->right;
             }
-			pred->right = pt_s->right;
 			T aux = pred->key;
             pred->key = pt->key;
             pt->key = aux;
@@ -181,11 +180,11 @@ Node<T>* nthElement(Node<T> *tree, int n){
 template<typename T>
 int position(Node<T>* tree, T element) {
 	if ( tree == nullptr ) return 0;
-	if ( tree->key == element ) return 1;
-	if ( tree->key < element )
-		return 1 + position(tree->left, element);
+	if ( tree->key == element ) return 1 + tree->nodesL;
+	if ( tree->key > element )
+		return position(tree->left, element);
 	else
-		return tree->nodesL + position(tree->right, element);
+		return tree->nodesL + position(tree->right, element) + 1;
 }
 
 template<typename T>
@@ -207,7 +206,6 @@ bool isComplete (Node<T>* root, unsigned int number_nodes, unsigned int index = 
     if (index >= number_nodes) 
         return (false); 
   
-    // Recur for left and right subtrees 
     return (isComplete(root->left, 2*index + 1, number_nodes) && 
             isComplete(root->right, 2*index + 2, number_nodes)); 
 } 

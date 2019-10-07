@@ -26,20 +26,20 @@ void runTest(Node<T>* tree, std::string path){
 		T key;
 		if (fcomand == "ENESIMO"){
 			test >>arg;
-			std::cout << "Elemento " << arg << " " << nthElement(tree, arg)->key << std::endl;
+			std::cout << "Elemento " << arg << ": " << nthElement(tree, arg)->key << std::endl;
 		}
 		else if ( fcomand == "POSICAO"){
 			test >> arg;
-			std::cout << "Posição de " << arg << " " <<position(tree, arg) << std::endl;
+			std::cout << "Posição de " << arg << ": " <<position(tree, arg) << std::endl;
 		}
 		else if ( fcomand == "MEDIANA"){
-			std::cout<< "Mediana: " <<median(tree) <<std::endl;
+			std::cout<< "Mediana: " << median(tree) <<std::endl;
 		}
 		else if ( fcomand == "CHEIA"){
-			std::cout << "Eh cheia "<< isFull(tree) <<std::endl;
+			std::cout << "Eh cheia: "<< isFull(tree) <<std::endl;
 		}
 		else if ( fcomand == "COMPLETA"){
-			std::cout << "Eh completa "<< isComplete(tree, tree->nodesL + tree->nodesR + 1) <<std::endl;
+			std::cout << "Eh completa: "<< isComplete(tree, tree->nodesL + tree->nodesR + 1) <<std::endl;
 		}
 		else if ( fcomand == "INSIRA"){
 			test >> key;
@@ -50,7 +50,7 @@ void runTest(Node<T>* tree, std::string path){
 			binTreeRemoval(tree, key);
 		}
 		else{ 
-			printf("IMPRIMINDO MESMO EM\n");
+			printf("Imprimindo por nível... :\n");
 			std::cout << toString(tree) << std::endl;
 		}
 	}
