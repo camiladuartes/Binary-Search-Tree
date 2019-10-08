@@ -17,6 +17,9 @@ struct Node {
     Node<T> *dad;
 };
 
+int position_counter = 0, aux = 0;
+bool position_counter_check = false;
+
 template <typename T>
 Node<T>*& binTreeSearch(Node<T> *&pt, T x){
     if(pt != nullptr){
@@ -178,13 +181,26 @@ Node<T>* nthElement(Node<T> *tree, int n){
 
 
 template<typename T>
-int position(Node<T>* tree, T element) {
-	if ( tree == nullptr ) return 0;
-	if ( tree->key == element ) return 1 + tree->nodesL;
-	if ( tree->key > element )
-		return position(tree->left, element);
-	else
-		return tree->nodesL + position(tree->right, element) + 1;
+int position(Node<T>* ptr, T data) {
+    if(ptr->left != nullptr) {
+        position(ptr->left, data);
+    }
+
+    position_counter++;
+    if(ptr->key == data) {
+        aux = position_counter;
+        position_counter = 0;
+        position_counter_check = true;
+    }
+
+    if(ptr->right != nullptr){
+        position(ptr->right, data);
+    }
+
+    if(position_counter_check)
+    {   
+        return aux;
+    }
 }
 
 template<typename T>
